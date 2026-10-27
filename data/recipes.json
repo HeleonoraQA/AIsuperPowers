@@ -1,0 +1,62 @@
+[
+  {
+    "id": "steam_broccoli",
+    "name": "Брокколи на пару",
+    "ingredients": ["брокколи", "соль"],
+    "cooking_method": "steam"
+  },
+  {
+    "id": "steam_rice",
+    "name": "Рис на пару",
+    "ingredients": ["рис", "вода", "соль"],
+    "cooking_method": "steam"
+  },
+  {
+    "id": "oven_potato",
+    "name": "Картофель в духовке",
+    "ingredients": ["картофель", "масло", "соль"],
+    "cooking_method": "oven"
+  },
+  {
+    "id": "oven_chicken",
+    "name": "Курица в духовке",
+    "ingredients": ["курица", "чеснок", "масло", "соль"],
+    "cooking_method": "oven"
+  },
+  {
+    "id": "oven_vegetables",
+    "name": "Овощи в духовке",
+    "ingredients": ["картофель", "морковь", "лук", "масло"],
+    "cooking_method": "oven"
+  },
+  {
+    "id": "oven_fish",
+    "name": "Рыба в духовке",
+    "ingredients": ["рыба", "лимон", "масло", "соль"],
+    "cooking_method": "oven"
+  },
+  {
+    "id": "stove_omelette",
+    "name": "Омлет",
+    "ingredients": ["яйцо", "молоко", "масло", "соль"],
+    "cooking_method": "stove"
+  },
+  {
+    "id": "stove_pasta",
+    "name": "Макароны с сыром",
+    "ingredients": ["макароны", "сыр", "масло"],
+    "cooking_method": "stove"
+  },
+  {
+    "id": "stove_soup",
+    "name": "Овощной суп",
+    "ingredients": ["картофель", "морковь", "лук", "вода", "соль"],
+    "cooking_method": "stove"
+  },
+  {
+    "id": "stove_buckwheat",
+    "name": "Гречка с луком",
+    "ingredients": ["гречка", "лук", "масло", "соль"],
+    "cooking_method": "stove"
+  }
+]

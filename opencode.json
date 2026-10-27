@@ -1,0 +1,92 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["rules.md", "rules/python.md", "rules/claude-mem.md"],
+  "permissions": [
+    { "action": "read", "resource": "*.env", "effect": "deny" },
+    { "action": "read", "resource": "*.env.*", "effect": "deny" },
+    { "action": "read", "resource": "*secrets/*", "effect": "deny" },
+    { "action": "read", "resource": "*.key", "effect": "deny" },
+    { "action": "read", "resource": "*.pem", "effect": "deny" },
+    { "action": "edit", "resource": "*", "effect": "ask" },
+    { "action": "edit", "resource": "*.env", "effect": "deny" },
+    { "action": "edit", "resource": "*.env.*", "effect": "deny" },
+    { "action": "edit", "resource": "*secrets/*", "effect": "deny" },
+    { "action": "edit", "resource": "*.key", "effect": "deny" },
+    { "action": "edit", "resource": "*.pem", "effect": "deny" },
+    { "action": "shell", "resource": "*", "effect": "ask" },
+    { "action": "shell", "resource": "git *", "effect": "allow" },
+    { "action": "shell", "resource": "git push", "effect": "ask" },
+    { "action": "shell", "resource": "git push *", "effect": "ask" },
+    { "action": "shell", "resource": "pytest *", "effect": "allow" },
+    { "action": "shell", "resource": "ruff check *", "effect": "allow" },
+    { "action": "shell", "resource": "ruff format *", "effect": "allow" },
+    { "action": "shell", "resource": "ls *", "effect": "allow" }
+  ],
+  "policies": [
+    { "action": "tool.use", "resource": "read:*.env", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.env.*", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*secrets/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.key", "effect": "deny" },
+    { "action": "tool.use", "resource": "read:*.pem", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.env", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.env.*", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*secrets/*", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.key", "effect": "deny" },
+    { "action": "tool.use", "resource": "edit:*.pem", "effect": "deny" }
+  ],
+  "plugins": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "@ephemushroom/opencode-claude-mem"
+  ],
+  "commands": {
+    "check": {
+      "description": "Полная проверка - ruff check + format + pytest",
+      "command": "ruff check . --fix && ruff format . && pytest -q"
+    },
+    "lint": {
+      "description": "Линтинг и форматирование кода",
+      "command": "ruff check . --fix && ruff format ."
+    },
+    "test": {
+      "description": "Запуск тестов",
+      "command": "pytest -q"
+    },
+    "run": {
+      "description": "Запуск Recipe Finder CLI",
+      "command": "python -m recipe_finder"
+    }
+  },
+  "hooks": {
+    "post-edit": [
+      {
+        "match": "**/*.py",
+        "run": ["ruff", "check", "--fix", "${file}"],
+        "continueOnError": true
+      },
+      {
+        "match": "**/*.py",
+        "run": ["ruff", "format", "${file}"],
+        "continueOnError": true
+      }
+    ],
+    "post-write": [
+      {
+        "match": "**/*.py",
+        "run": ["ruff", "check", "--fix", "${file}"],
+        "continueOnError": true
+      },
+      {
+        "match": "**/*.py",
+        "run": ["ruff", "format", "${file}"],
+        "continueOnError": true
+      }
+    ],
+    "pre-complete": [
+      {
+        "description": "Напомнить проверить docs/progress.md",
+        "run": ["echo", "[REMINDER] Не забудь проверить и зафиксировать результаты проверок в docs/progress.md согласно AGENTS.md §6"],
+        "continueOnError": true
+      }
+    ]
+  }
+}
